@@ -41,12 +41,12 @@ array<string> InterpolateColors(int steps, InterpolationType type) {
                 break;
 
             case InterpolationType::Back:
-                float s = 1.70158;
+                // float s = 1.70158;
                 t = t * t * ((1.70158 + 1) * t - 1.70158);
                 break;
 
             case InterpolationType::Elastic:
-                float p = 0.3;
+                // float p = 0.3;
                 t = Math::Pow(2, -10 * t) * Math::Sin((t - 0.3 / 4) * (2 * Math::PI) / 0.3) + 1;
                 break;
 

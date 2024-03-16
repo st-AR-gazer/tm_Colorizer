@@ -6,8 +6,3 @@ string endColorGlobal = "#33FFFF";
 void ToggleEscapeCharacters() {
     includeEscapeCharacters = !includeEscapeCharacters;
 }
-
-
-
-//
-
