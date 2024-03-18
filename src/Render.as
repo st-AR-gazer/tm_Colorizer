@@ -13,7 +13,77 @@ void RenderMenu() {
 }
 
 void Render() {
+    if (expotOnlyMode) { return; }
+
     if (!uiVisible) { return; }
+
+    int window_flags = UI::WindowFlags::NoCollapse | UI::WindowFlags::AlwaysAutoResize | UI::WindowFlags::NoDocking;
+
+    if (UI::Begin("Colorizer", uiVisible, window_flags)) {
+        UI::Text("Preview: " + colorizedUserInput);
+
+        UI::Separator();
+
+        if(UI::Button("Colorize")) { // send to bottom
+            ColorizeString("Colorizer", InterpolationType::Linear, startColor, endColor);
+        }
+        
+        UI::Separator();
+
+        UI::InputInt("Start Color", t_startColor);
+        UI::SameLine();
+        UI::InputInt("End Color", t_endColor);
+        
+
+        UI::InputText("Filename", );
+
+
+        if (UI::Button("Does the dragonyeet hit the glass?")) { 
+            if (classificationDoesHitRoof == true) { 
+                classificationDoesHitRoof = false; 
+            } else { 
+                classificationDoesHitRoof = true; 
+            } 
+        }
+        if (classificationDoesHitRoof == true) {
+            UI::Text("The dragonyeet " + "\\$0f0" + "DOES "     + "\\$z" + "hit the glass");
+        } else {
+            UI::Text("The dragonyeet " + "\\$f00" + "DOES NOT " + "\\$z" + "hit the glass");
+        }
+
+        UI::Text("Current filename: `" + filename + "`");
+
+        UI::Separator();
+        
+        if (startFileEnabled) {
+            UI::BeginDisabled();
+            if (UI::Button("Start Recording (file)")) { StartRecording(filename, classificationDoesHitRoof); startFileEnabled = false; }
+            UI::EndDisabled();
+            UI::SameLine();
+            if (UI::Button("Stop Recording (file)")) { StopRecording(); startFileEnabled = true; }
+        } else {
+            if (UI::Button("Start Recording (file)")) { StartRecording(filename, classificationDoesHitRoof); startFileEnabled = false; }
+            UI::SameLine();
+            UI::BeginDisabled();
+            if (UI::Button("Stop Recording (file)")) { StopRecording(); startFileEnabled = true; }
+            UI::EndDisabled();
+        }
+
+        UI::Separator();
+
+        UI::BeginDisabled();
+        if (UI::Button("Open Socket")) { openSocket(); }
+        UI::SameLine(); 
+        if (UI::Button("Close Socket")) { closeSocket(); }
+
+        if (UI::Button("Close Resoueces")) { closeResources(); }
+        UI::EndDisabled();
+        UI::End();
+    }
+
+
+
+
 
     UI::Begin("Colorizer", uiVisible);
 
