@@ -1,3 +1,5 @@
+InterpolationType currentInterpolationType = InterpolationType::Linear;
+
 enum InterpolationType {
     Linear,
     Quadratic,
@@ -13,12 +15,12 @@ enum InterpolationType {
     Circular
 };
 
-array<string> InterpolateColors(int steps, InterpolationType type) {
+array<string> InterpolateColors(int steps, InterpolationType type, const string &in t_u_startColor, const string &in t_u_endColor) {
     array<string> colorArray;
 
     int sR, sG, sB, eR, eG, eB;
-    HexToRgb(startColorGlobal, sR, sG, sB);
-    HexToRgb(endColorGlobal, eR, eG, eB);
+    HexToRgb(t_u_startColor, sR, sG, sB);
+    HexToRgb(t_u_endColor, eR, eG, eB);
 
     for (int step = 0; step < steps; ++step) {
         float t = float(step) / (steps - 1);
