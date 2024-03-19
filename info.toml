@@ -3,3 +3,6 @@ name = "Colorizer"
 author = "ar....."
 version = "0.1.0"
 category = "Tools"
+
+[script]
+exports = [ "src/Exports/Exports.as" ]
