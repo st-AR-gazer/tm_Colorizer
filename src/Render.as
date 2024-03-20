@@ -10,7 +10,7 @@ string u_endColor = "#33FFFF";
 // string u_endColor;
 
 void RenderMenu() {
-    if (UI::MenuItem("\\$1F1" + Icons::Tachometer + " " + Icons::PaintBrush + "\\$ " + ColorizeString("Colorizer", InterpolationType::InverseQuadratic, "#1DFF1A", "#FFD53D"))) {
+    if (UI::MenuItem("\\$1F1" + Icons::Tachometer + " " + Icons::PaintBrush + "\\$ " + ColorizeString("Colorizer", InterpolationType::InverseQuadratic, "#1DFF1A", "#FFD53D", true))) {
         uiVisible = !uiVisible;
     }
 }
@@ -66,7 +66,7 @@ void RenderInterface() {
         if (UI::Button("Reset")) {
             ResetToDefaults();
         }
-        UI::Text("I'd recomend using the website for this TM Color \nCode Formatter (" + ColorizeString("colorizer.xjk.yt", InterpolationType::Linear, "#1DFF1A", "", true) + "), it's more user frindly and has more \nfeatures.");
+        UI::Text("I'd recomend using the website for this TM Color Code Formatter \n(" + ColorizeString("colorizer.xjk.yt", InterpolationType::Linear, "#1DFF1A", "", true) + "), it's more user frindly and has more features.");
         if (UI::Selectable("Click HERE to open the colorizer", false)) {
             OpenBrowserURL("https://www.colorizer.xjk.yt");
         }
