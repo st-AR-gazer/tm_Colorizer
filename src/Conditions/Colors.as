@@ -12,7 +12,8 @@ namespace _col {
         inverseQuadratic,
         smoothstep,
         smootherstep,
-        circular
+        circular,
+        parabola
     };
 
     bool verbose = false;
@@ -143,7 +144,7 @@ namespace _col {
             return normalizedColor;
         }
 
-        vec3 InterpolateColors(const array<vec3> &in colors, float position, GradientMode mode) {
+                vec3 InterpolateColors(const array<vec3> &in colors, float position, GradientMode mode) {
             if (verbose) log("Interpolating colors at position: " + tostring(position) + " with mode: " + tostring(mode), LogLevel::Info, 141, "InterpolateColors");
             float p;
             if (mode == linear) {
@@ -162,18 +163,20 @@ namespace _col {
                 p = Math::Pow(2, 10 * (position - 1)) * Math::Sin((position - 1.075) * (2 * _Math::PI) / 0.3);
             } else if (mode == bounce) {
                 p = 1 - Math::Abs(Math::Cos(position * _Math::PI * 4) * (1 - position));
-            } else if (mode == inverseQuadratic) {
-                p = 1 - Math::Pow(1 - position, 2);
             } else if (mode == smoothstep) {
                 p = Math::Pow(position, 2) * (3 - 2 * position);
             } else if (mode == smootherstep) {
                 p = Math::Pow(position, 3) * (position * (position * 6 - 15) + 10);
             } else if (mode == circular) {
                 p = 1 - Math::Sqrt(1 - Math::Pow(position, 2));
+            } else if (mode == parabola) {
+                p = Math::Pow(2 * position - 1, 2);
             } else {
                 p = position;
             }
-            
+
+            p = Math::Clamp(p, 0.0, 1.0);
+
             if (verbose) log("Position: " + tostring(position) + " P: " + tostring(p), LogLevel::Info, 149, "InterpolateColors");
             uint startIdx = uint(Math::Floor(p * (colors.Length - 1)));
             uint endIdx = Math::Min(startIdx + 1, colors.Length - 1);
