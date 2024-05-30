@@ -109,3 +109,7 @@ namespace _Json {
         }
     }
 }
+
+namespace _Math {
+    double Pi = 3.14159265358979323846;
+}
