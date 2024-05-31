@@ -1,4 +1,4 @@
-build_name_overwrite = "Colorizer"
+build_name_overwrite = ""
 # Empty = No overwrite by default
 
 import argparse
