@@ -1,12 +1,10 @@
 bool uiVisible = false;
 
 string userInput = "";
-string colorCode = "#FFFFFF"; 
-string previewText = ""; 
-string u_startColor = "#0033CC";
-string u_endColor = "#33FFFF";
+array<string> colors = {"#0033CC", "#33FFFF"};
 _col::GradientMode currentGradientMode = _col::GradientMode::linear;
 bool includeEscapeCharacters = true;
+bool flippedText = false;
 
 void RenderMenu() {
     if (UI::MenuItem("\\$1F1" + Icons::Tachometer + " " + Icons::PaintBrush + "\\$ " + _col::CS("Colorizer", {"#1DFF1A", "#FFD53D"}, _col::GradientMode::inverseQuadratic, true))) {
@@ -22,7 +20,7 @@ void RenderInterface() {
     if (UI::Begin("Colorizer", uiVisible, window_flags)) {
         userInput = UI::InputText("String to be Colorized", userInput);
 
-        string colorizedUserInput = _col::CS(userInput, {u_startColor, u_endColor}, currentGradientMode, includeEscapeCharacters);
+        string colorizedUserInput = _col::CS(userInput, colors, currentGradientMode, includeEscapeCharacters, flippedText);
         UI::Text("Preview: " + colorizedUserInput);
         UI::SameLine();
         if (UI::Button("Copy to Clipboard")) {
@@ -48,10 +46,23 @@ void RenderInterface() {
         }
 
         UI::Separator();
-        u_startColor = UI::InputText("Start Color", u_startColor);
-        u_endColor = UI::InputText("End Color", u_endColor);
+
+        for (uint i = 0; i < colors.Length; i++) {
+            string colorLabel = "Color " + (i + 1);
+            colors[i] = UI::InputText(colorLabel, colors[i]);
+        }
+
+        if (UI::Button("Add Color")) {
+            colors.InsertLast("#FFFFFF"); // Default new color
+        }
+
+        if (UI::Button("Remove Last Color") && colors.Length > 2) {
+            colors.RemoveLast();
+        }
 
         includeEscapeCharacters = UI::Checkbox("Include Escape Characters", includeEscapeCharacters);
+
+        flippedText = UI::Checkbox("Flip Text", flippedText);
 
         if (UI::Button("Reset")) {
             ResetToDefaults();
@@ -86,9 +97,7 @@ string GetGradientModeAsString(_col::GradientMode mode) {
 
 void ResetToDefaults() {
     userInput = "";
-    colorCode = "#FFFFFF";
-    u_startColor = "#0033CC";
-    u_endColor = "#33FFFF";
+    colors = {"#0033CC", "#33FFFF"};
     includeEscapeCharacters = false;
     currentGradientMode = _col::GradientMode::linear;
 }
