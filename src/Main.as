@@ -1,12 +1,17 @@
+[Setting name="Menu Overwrite" decription="Overwrite the condition set by export plugins to always show the colorizer UI."]
+bool userMenuVisibleOverwrite = false;
+
 bool uiVisible = false;
 
 string userInput = "";
 array<string> colors = {"#0033CC", "#33FFFF"};
 _col::GradientMode currentGradientMode = _col::GradientMode::linear;
 bool includeEscapeCharacters = true;
-bool flippedText = false;
+bool flippedColor = false;
 
 void RenderMenu() {
+    if (userMenuVisibleOverwrite) { menuVisible = true; }
+    if (!menuVisible) { return; }
     if (UI::MenuItem("\\$1F1" + Icons::Tachometer + " " + Icons::PaintBrush + "\\$ " + _col::CS("Colorizer", {"#1DFF1A", "#FFD53D"}, _col::GradientMode::inverseQuadratic, true))) {
         uiVisible = !uiVisible;
     }
@@ -20,7 +25,7 @@ void RenderInterface() {
     if (UI::Begin("Colorizer", uiVisible, window_flags)) {
         userInput = UI::InputText("String to be Colorized", userInput);
 
-        string colorizedUserInput = _col::CS(userInput, colors, currentGradientMode, includeEscapeCharacters, flippedText);
+        string colorizedUserInput = _col::CS(userInput, colors, currentGradientMode, includeEscapeCharacters, flippedColor);
         UI::Text("Preview: " + colorizedUserInput);
         UI::SameLine();
         if (UI::Button("Copy to Clipboard")) {
@@ -50,26 +55,28 @@ void RenderInterface() {
         for (uint i = 0; i < colors.Length; i++) {
             string colorLabel = "Color " + (i + 1);
             colors[i] = UI::InputText(colorLabel, colors[i]);
+            UI::SameLine();
+            if (UI::Button("Delete##" + i)) {
+                if (colors.Length > 1) {
+                    colors.RemoveAt(i);
+                }
+            }
         }
 
         if (UI::Button("Add Color")) {
-            colors.InsertLast("#FFFFFF"); // Default new color
-        }
-
-        if (UI::Button("Remove Last Color") && colors.Length > 2) {
-            colors.RemoveLast();
+            colors.InsertLast("#FFFFFF");
         }
 
         includeEscapeCharacters = UI::Checkbox("Include Escape Characters", includeEscapeCharacters);
 
-        flippedText = UI::Checkbox("Flip Text", flippedText);
+        flippedColor = UI::Checkbox("Flip Text", flippedColor);
 
         if (UI::Button("Reset")) {
             ResetToDefaults();
         }
 
-        UI::Text("I'd recommend using the website for this TM Color Code Formatter \n(" + _col::CS("colorizer.xjk.yt", {"#1DFF1A", ""}, _col::GradientMode::linear, true) + "), it's more user-friendly and has more features.");
-        if (UI::Selectable("Click HERE to open the colorizer", false)) {
+        UI::Text("I'd recommend using the website for this TM Color Code Formatter, it's a bit better imo (and it can be used without having TM open which is nice).");
+        if (UI::Selectable(_col::CS("colorizer.xjk.yt", {"#0000EE", "#1010FE"}, _col::GradientMode::linear, true), false)) {
             OpenBrowserURL("https://www.colorizer.xjk.yt");
         }
 
@@ -100,4 +107,5 @@ void ResetToDefaults() {
     colors = {"#0033CC", "#33FFFF"};
     includeEscapeCharacters = false;
     currentGradientMode = _col::GradientMode::linear;
+    flippedColor = false;
 }
