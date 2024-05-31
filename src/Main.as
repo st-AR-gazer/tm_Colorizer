@@ -1,7 +1,8 @@
-[Setting name="Menu Overwrite" decription="Overwrite the condition set by export plugins to always show the colorizer UI."]
+[Setting category="General" name="Menu Overwrite" description="Overwrite the condition set by export plugins to always show the colorizer UI."]
 bool userMenuVisibleOverwrite = false;
 
 bool uiVisible = false;
+bool menuVisible = true;
 
 string userInput = "";
 array<string> colors = {"#0033CC", "#33FFFF"};
@@ -12,7 +13,7 @@ bool flippedColor = false;
 void RenderMenu() {
     if (userMenuVisibleOverwrite) { menuVisible = true; }
     if (!menuVisible) { return; }
-    if (UI::MenuItem("\\$1F1" + Icons::Tachometer + " " + Icons::PaintBrush + "\\$ " + _col::CS("Colorizer", {"#1DFF1A", "#FFD53D"}, _col::GradientMode::inverseQuadratic, true))) {
+    if (UI::MenuItem("\\$1F1" + "\\$ " + _col::CS(Icons::Tachometer + " " + Icons::PaintBrush + "Colorizer", {"#a2e4f8", "#b2f2b7", "#fcedbb"}, _col::GradientMode::inverseQuadratic, true))) {
         uiVisible = !uiVisible;
     }
 }
@@ -69,14 +70,14 @@ void RenderInterface() {
 
         includeEscapeCharacters = UI::Checkbox("Include Escape Characters", includeEscapeCharacters);
 
-        flippedColor = UI::Checkbox("Flip Text", flippedColor);
+        flippedColor = UI::Checkbox("Flip Color", flippedColor);
 
         if (UI::Button("Reset")) {
             ResetToDefaults();
         }
 
-        UI::Text("I'd recommend using the website for this TM Color Code Formatter, it's a bit better imo (and it can be used without having TM open which is nice).");
-        if (UI::Selectable(_col::CS("colorizer.xjk.yt", {"#0000EE", "#1010FE"}, _col::GradientMode::linear, true), false)) {
+        UI::Text("I'd recommend using the website for this TM Color Code \nFormatter, it's a bit better imo (and it can be used without having TM \nopen which is nice).");
+        if (UI::Selectable(_col::CS("colorizer.xjk.yt", {"77f", "aaf"}, _col::GradientMode::linear, true), false)) {
             OpenBrowserURL("https://www.colorizer.xjk.yt");
         }
 
