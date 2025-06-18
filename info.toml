@@ -1,8 +1,8 @@
 [meta]
 name = "Colorizer"
-author = "ar....."
-version = "0.1.0"
-category = "Tools"
+author = "ar"
+version = "0.1.1"
+category = "Utilities"
 
 [script]
 exports = [ "src/Exports/Exports.as" ]
