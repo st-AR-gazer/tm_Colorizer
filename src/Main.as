@@ -1,7 +1,7 @@
 
 bool g_ShowWindow = false;
 string g_Input = "Colourful text!";
-array<string> g_Palette = { "5cf", "fab", "fff", "fab", "5cf" };
+array<string> g_Palette = { "E40303", "FF8C00", "FFED00", "008026", "00C0C0", "335CCB", "9F25B8" };
 
 Colorizer::GradientMode g_Mode = Colorizer::GradientMode::linear;
 bool g_UseEsc  = true;
@@ -30,7 +30,7 @@ bool menuVisible = true;
 void RenderMenu() {
     if (!uiVisible || !menuVisible) return;
 
-    if (UI::MenuItem(Colorize(Icons::PaintBrush + " Colorizer", g_Palette, g_Mode, g_UseEsc, g_FlipPal), "", g_ShowWindow)) g_ShowWindow = !g_ShowWindow;
+    if (UI::MenuItem(Colorize(Icons::PaintBrush + " Text Colorizer", g_Palette, g_Mode, g_UseEsc, g_FlipPal), "", g_ShowWindow)) g_ShowWindow = !g_ShowWindow;
 }
 
 void RenderInterface() {
